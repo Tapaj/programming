@@ -41,7 +41,7 @@ class qtype_programming_edit_form extends question_edit_form {
 
             $mform->addElement('select', 'responseformat',
                     get_string('responseformat', 'qtype_programming'), $qtype->response_formats());
-            $mform->setDefault('responseformat', 'editor');
+            $mform->setDefault('responseformat', 'monospaced');
 
             $mform->addElement('select', 'responserequired',
                     get_string('responserequired', 'qtype_programming'), $qtype->response_required_options());
@@ -56,6 +56,7 @@ class qtype_programming_edit_form extends question_edit_form {
             $mform->addElement('select', 'attachments',
                     get_string('allowattachments', 'qtype_programming'), $qtype->attachment_options());
             $mform->setDefault('attachments', 0);
+            $mform->disabledIf('attachments', 'responserequired', 'eq', 1);
 
             $mform->addElement('select', 'attachmentsrequired',
                     get_string('attachmentsrequired', 'qtype_programming'), $qtype->attachments_required_options());
