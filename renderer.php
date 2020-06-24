@@ -138,8 +138,8 @@ class qtype_programming_renderer extends qtype_renderer {
  * A base class to abstract out the differences between different type of
  * response format.
  *
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  NA
+ * @license    NA
  */
 abstract class qtype_programming_format_renderer_base extends plugin_renderer_base {
     /**
@@ -173,11 +173,11 @@ abstract class qtype_programming_format_renderer_base extends plugin_renderer_ba
 }
 
 /**
- * An programming format renderer for programmings where the student should not enter
+ * An programming format renderer for programs where the student should not enter
  * any inline response.
  *
- * @copyright  2013 Binghamton University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  NA
+ * @license    NA
  */
 class qtype_programming_format_noinline_renderer extends plugin_renderer_base {
 
@@ -199,8 +199,8 @@ class qtype_programming_format_noinline_renderer extends plugin_renderer_base {
  * An programming format renderer for programmings where the student should use the HTML
  * editor without the file picker.
  *
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  NA
+ * @license    NA
  */
 class qtype_programming_format_editor_renderer extends plugin_renderer_base {
     protected function class_name() {
@@ -328,8 +328,8 @@ class qtype_programming_format_editor_renderer extends plugin_renderer_base {
  * An programming format renderer for programmings where the student should use the HTML
  * editor with the file picker.
  *
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  NA
+ * @license    NA
  */
 class qtype_programming_format_editorfilepicker_renderer extends qtype_programming_format_editor_renderer {
     protected function class_name() {
@@ -425,8 +425,8 @@ class qtype_programming_format_editorfilepicker_renderer extends qtype_programmi
  * An programming format renderer for programmings where the student should use a plain
  * input box, but with a normal, proportional font.
  *
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  NA
+ * @license    NA
  */
 class qtype_programming_format_plain_renderer extends plugin_renderer_base {
     /**
@@ -461,8 +461,8 @@ class qtype_programming_format_plain_renderer extends plugin_renderer_base {
  * input box with a monospaced font. You might use this, for example, for a
  * question where the students should type computer code.
  *
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  NA
+ * @license    NA
  */
 class qtype_programming_format_monospaced_renderer extends qtype_programming_format_plain_renderer {
     protected function class_name() {
