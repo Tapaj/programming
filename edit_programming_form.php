@@ -28,46 +28,60 @@ class qtype_programming_edit_form extends question_edit_form {
     protected function definition_inner($mform) {
         $qtype = question_bank::get_qtype('programming');
 
+        /**
+         * The "general" and "tags" are included by default
+         */
+
+        /**
+         * adds the "response option" section
+         */
         $mform->addElement('header', 'responseoptions', get_string('responseoptions', 'qtype_programming'));
         $mform->setExpanded('responseoptions');
 
-        $mform->addElement('select', 'responseformat',
-                get_string('responseformat', 'qtype_programming'), $qtype->response_formats());
-        $mform->setDefault('responseformat', 'editor');
+            $mform->addElement('select', 'responseformat',
+                    get_string('responseformat', 'qtype_programming'), $qtype->response_formats());
+            $mform->setDefault('responseformat', 'editor');
 
-        $mform->addElement('select', 'responserequired',
-                get_string('responserequired', 'qtype_programming'), $qtype->response_required_options());
-        $mform->setDefault('responserequired', 1);
-        $mform->disabledIf('responserequired', 'responseformat', 'eq', 'noinline');
+            $mform->addElement('select', 'responserequired',
+                    get_string('responserequired', 'qtype_programming'), $qtype->response_required_options());
+            $mform->setDefault('responserequired', 1);
+            $mform->disabledIf('responserequired', 'responseformat', 'eq', 'noinline');
 
-        $mform->addElement('select', 'responsefieldlines',
-                get_string('responsefieldlines', 'qtype_programming'), $qtype->response_sizes());
-        $mform->setDefault('responsefieldlines', 15);
-        $mform->disabledIf('responsefieldlines', 'responseformat', 'eq', 'noinline');
+            $mform->addElement('select', 'responsefieldlines',
+                    get_string('responsefieldlines', 'qtype_programming'), $qtype->response_sizes());
+            $mform->setDefault('responsefieldlines', 15);
+            $mform->disabledIf('responsefieldlines', 'responseformat', 'eq', 'noinline');
 
-        $mform->addElement('select', 'attachments',
-                get_string('allowattachments', 'qtype_programming'), $qtype->attachment_options());
-        $mform->setDefault('attachments', 0);
+            $mform->addElement('select', 'attachments',
+                    get_string('allowattachments', 'qtype_programming'), $qtype->attachment_options());
+            $mform->setDefault('attachments', 0);
 
-        $mform->addElement('select', 'attachmentsrequired',
-                get_string('attachmentsrequired', 'qtype_programming'), $qtype->attachments_required_options());
-        $mform->setDefault('attachmentsrequired', 0);
-        $mform->addHelpButton('attachmentsrequired', 'attachmentsrequired', 'qtype_programming');
-        $mform->disabledIf('attachmentsrequired', 'attachments', 'eq', 0);
+            $mform->addElement('select', 'attachmentsrequired',
+                    get_string('attachmentsrequired', 'qtype_programming'), $qtype->attachments_required_options());
+            $mform->setDefault('attachmentsrequired', 0);
+            $mform->addHelpButton('attachmentsrequired', 'attachmentsrequired', 'qtype_programming');
+            $mform->disabledIf('attachmentsrequired', 'attachments', 'eq', 0);
 
-        $mform->addElement('filetypes', 'filetypeslist', get_string('acceptedfiletypes', 'qtype_programming'));
-        $mform->addHelpButton('filetypeslist', 'acceptedfiletypes', 'qtype_programming');
-        $mform->disabledIf('filetypeslist', 'attachments', 'eq', 0);
+            $mform->addElement('filetypes', 'filetypeslist', get_string('acceptedfiletypes', 'qtype_programming'));
+            $mform->addHelpButton('filetypeslist', 'acceptedfiletypes', 'qtype_programming');
+            $mform->disabledIf('filetypeslist', 'attachments', 'eq', 0);
 
+        /**
+         * adds the "response template" section
+         */
         $mform->addElement('header', 'responsetemplateheader', get_string('responsetemplateheader', 'qtype_programming'));
-        $mform->addElement('editor', 'responsetemplate', get_string('responsetemplate', 'qtype_programming'),
-                array('rows' => 10),  array_merge($this->editoroptions, array('maxfiles' => 0)));
-        $mform->addHelpButton('responsetemplate', 'responsetemplate', 'qtype_programming');
 
+            $mform->addElement('editor', 'responsetemplate', get_string('responsetemplate', 'qtype_programming'),
+                    array('rows' => 10),  array_merge($this->editoroptions, array('maxfiles' => 0)));
+            $mform->addHelpButton('responsetemplate', 'responsetemplate', 'qtype_programming');
+
+        /**
+         * adds the "grader information" section
+         */
         $mform->addElement('header', 'graderinfoheader', get_string('graderinfoheader', 'qtype_programming'));
-        $mform->setExpanded('graderinfoheader');
-        $mform->addElement('editor', 'graderinfo', get_string('graderinfo', 'qtype_programming'),
-                array('rows' => 10), $this->editoroptions);
+            $mform->setExpanded('graderinfoheader');
+            $mform->addElement('editor', 'graderinfo', get_string('graderinfo', 'qtype_programming'),
+                    array('rows' => 10), $this->editoroptions);
     }
 
     protected function data_preprocessing($question) {
