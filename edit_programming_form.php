@@ -28,13 +28,14 @@ class qtype_programming_edit_form extends question_edit_form {
     protected function definition_inner($mform) {
         $qtype = question_bank::get_qtype('programming');
 
-        /**
-         * The "general" and "tags" are included by default
-         */
+        
+        // The "general" at the top and "tags" at the bottom are included by default
 
-        /**
-         * adds the "response option" section
-         */
+        // add the "test cases" section
+        $this->add_per_answer_fields($mform, get_string('choiceno', 'qtype_multichoice', '{no}'), question_bank::fraction_options_full());
+
+
+        // adds the "response option" section
         $mform->addElement('header', 'responseoptions', get_string('responseoptions', 'qtype_programming'));
         $mform->setExpanded('responseoptions');
 
@@ -66,22 +67,78 @@ class qtype_programming_edit_form extends question_edit_form {
             $mform->addHelpButton('filetypeslist', 'acceptedfiletypes', 'qtype_programming');
             $mform->disabledIf('filetypeslist', 'attachments', 'eq', 0);
 
-        /**
-         * adds the "response template" section
-         */
+        // adds the "response template" section
         $mform->addElement('header', 'responsetemplateheader', get_string('responsetemplateheader', 'qtype_programming'));
 
             $mform->addElement('editor', 'responsetemplate', get_string('responsetemplate', 'qtype_programming'),
                     array('rows' => 10),  array_merge($this->editoroptions, array('maxfiles' => 0)));
             $mform->addHelpButton('responsetemplate', 'responsetemplate', 'qtype_programming');
 
-        /**
-         * adds the "grader information" section
-         */
+        // adds the "grader information" section
         $mform->addElement('header', 'graderinfoheader', get_string('graderinfoheader', 'qtype_programming'));
             $mform->setExpanded('graderinfoheader');
             $mform->addElement('editor', 'graderinfo', get_string('graderinfo', 'qtype_programming'),
                     array('rows' => 10), $this->editoroptions);
+    }
+
+    /**
+     * Add a set of form fields, obtained from get_per_answer_fields, to the form,
+     * one for each existing answer, with some blanks for some new ones.
+     * @param object $mform the form being built.
+     * @param $label the label to use for each option.
+     * @param $gradeoptions the possible grades for each answer.
+     * @param $minoptions the minimum number of answer blanks to display.
+     *      Default QUESTION_NUMANS_START.
+     * @param $addoptions the number of answer blanks to add. Default QUESTION_NUMANS_ADD.
+     */
+    protected function add_per_answer_fields(&$mform, $label, $gradeoptions,
+            $minoptions = 1, $addoptions = 1) {
+        $mform->addElement('header', 'answerhdr',
+                    "Test Cases", '');
+        $mform->setExpanded('answerhdr', 1);
+
+        $mform->addElement("advcheckbox", "testcasevisible", get_string("testcasevisible", "qtype_programming"), "Enable", array(0, 1));
+
+        $answersoption = '';
+        $repeatedoptions = array();
+        $repeated = $this->get_per_answer_fields($mform, $label, $gradeoptions,
+                $repeatedoptions, $answersoption);
+
+        if (isset($this->question->options)) {
+            $repeatsatstart = count($this->question->options->$answersoption);
+        } else {
+            $repeatsatstart = $minoptions;
+        }
+
+        $this->repeat_elements($repeated, $repeatsatstart, $repeatedoptions,
+                'noanswers', 'addanswers', $addoptions,
+                $this->get_more_choices_string(), true);
+    }
+
+    /**
+     * Get the list of form elements to repeat, one for each answer.
+     * @param object $mform the form being built.
+     * @param $label the label to use for each option.
+     * @param $gradeoptions the possible grades for each answer.
+     * @param $repeatedoptions reference to array of repeated options to fill
+     * @param $answersoption reference to return the name of $question->options
+     *      field holding an array of answers
+     * @return array of form fields.
+     */
+    protected function get_per_answer_fields($mform, $label, $gradeoptions,
+            &$repeatedoptions, &$answersoption) {
+        $repeated = array();
+        $label = "Input";
+        $repeated[] = $mform->createElement('editor', 'answer',
+                $label, array('rows' => 1), $this->editoroptions);
+        $repeated[] = $mform->createElement('select', 'fraction',
+                get_string('grade'), $gradeoptions);
+        $repeated[] = $mform->createElement('editor', 'feedback',
+                "Expected output", array('rows' => 1), $this->editoroptions);
+        $repeatedoptions['answer']['type'] = PARAM_RAW;
+        $repeatedoptions['fraction']['default'] = 0;
+        $answersoption = 'answers';
+        return $repeated;
     }
 
     protected function data_preprocessing($question) {

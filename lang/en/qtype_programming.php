@@ -41,3 +41,5 @@ $string['responseisrequired'] = 'Require the student to enter text';
 $string['responsetemplate'] = 'Response template';
 $string['responsetemplateheader'] = 'Response Template';
 $string['responsetemplate_help'] = 'Any text entered here will be displayed in the response input box when a new attempt at the question starts.';
+
+$string["testcasevisible"]= "Make test cases visible to student";
