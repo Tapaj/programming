@@ -8,6 +8,9 @@
 }
 
 .que.programming textarea.qtype_programming_response.qtype_programming_monospaced {
+    color: #ffffff;
+    background-color: #000000;
+    
     white-space: pre;
     font-family: Andale Mono, Monaco, Courier New, DejaVu Sans Mono, monospace;
 }
